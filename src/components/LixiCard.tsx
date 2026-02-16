@@ -166,7 +166,9 @@ export default function LixiCard({
     if (!swapLock.current) {
       swapLock.current = true;
       setShowingMoney(true);
-      setTimeout(() => { swapLock.current = false; }, 800);
+      setTimeout(() => {
+        swapLock.current = false;
+      }, 800);
     }
 
     const count = 200;
@@ -233,8 +235,8 @@ export default function LixiCard({
         initial={{ opacity: 0, y: 40 }}
         animate={{
           opacity: 1,
-          y: showingMoney ? -550 : 45,
-          scale: showingMoney ? 2 : 0.93,
+          y: showingMoney ? -500 : 45,
+          scale: showingMoney ? 1.7 : 0.93,
           rotateX: showingMoney ? 0 : 2,
           zIndex: showingMoney ? 20 : 1,
           filter: showingMoney ? "brightness(1)" : "brightness(0.7)",
