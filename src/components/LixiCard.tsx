@@ -162,6 +162,13 @@ export default function LixiCard({
     if (confettiFired) return;
     setConfettiFired(true);
 
+    // Swap to money layer
+    if (!swapLock.current) {
+      swapLock.current = true;
+      setShowingMoney(true);
+      setTimeout(() => { swapLock.current = false; }, 800);
+    }
+
     const count = 200;
     const defaults = { origin: { y: 0.7 }, zIndex: 9999 };
 
