@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { AlertDialog } from "radix-ui";
 import confetti from "canvas-confetti";
 import { type FamilyMember } from "@/src/constants/greetings";
 
@@ -97,20 +98,64 @@ function GreetingLayer({
         ))}
       </div>
 
-      {/* Confetti button */}
-      <button
-        className={`card__btn ${confettiFired ? "card__btn--fired" : ""}`}
-        onClick={(e) => {
-          e.stopPropagation();
-          onConfetti();
-        }}
-        disabled={confettiFired}
-      >
-        <span className="card__btn-icon">🧧</span>
-        <span>
-          {confettiFired ? "Lộc Xuân đã đến!" : "Nhận Lộc Xuân từ Bin"}
-        </span>
-      </button>
+      {/* Confetti button or MoMo AlertDialog */}
+      {confettiFired ? (
+        <AlertDialog.Root>
+          <AlertDialog.Trigger asChild>
+            <button
+              className="card__btn card__btn--momo"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <span className="card__btn-icon">💸</span>
+              <span>Nhận lì xì qua MoMo ngay</span>
+            </button>
+          </AlertDialog.Trigger>
+          <AlertDialog.Portal>
+            <AlertDialog.Overlay className="momo-modal-overlay" />
+            <AlertDialog.Content
+              className="momo-modal"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="momo-modal__icon">📱</div>
+              <AlertDialog.Title className="momo-modal__title">
+                Nhận lì xì qua MoMo
+              </AlertDialog.Title>
+              <AlertDialog.Description className="momo-modal__desc">
+                Bạn cần có <strong>tài khoản MoMo</strong> để nhận tiền lì xì.
+                Nếu chưa có, hãy tải app MoMo và đăng ký trước nhé!
+              </AlertDialog.Description>
+              <div className="momo-modal__actions">
+                <AlertDialog.Cancel asChild>
+                  <button className="momo-modal__btn momo-modal__btn--cancel">
+                    Để sau
+                  </button>
+                </AlertDialog.Cancel>
+                <AlertDialog.Action asChild>
+                  <a
+                    href="https://lixi.momo.vn/lixi/dZ5WLnOAOvA24AO"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="momo-modal__btn momo-modal__btn--confirm"
+                  >
+                    🧧 Nhận lì xì ngay
+                  </a>
+                </AlertDialog.Action>
+              </div>
+            </AlertDialog.Content>
+          </AlertDialog.Portal>
+        </AlertDialog.Root>
+      ) : (
+        <button
+          className="card__btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            onConfetti();
+          }}
+        >
+          <span className="card__btn-icon">🧧</span>
+          <span>Nhận Lộc Xuân từ Bin</span>
+        </button>
+      )}
 
       {/* Bottom ornament */}
       <div className="card__bottom-ornament">✦ Bính Ngọ 2026 ✦</div>

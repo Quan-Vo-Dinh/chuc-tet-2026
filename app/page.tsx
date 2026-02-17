@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import { familyMembers } from "@/src/constants/greetings";
+import HomeCardGrid from "@/src/components/HomeCardGrid";
 
 export default function Home() {
   return (
@@ -31,25 +31,7 @@ export default function Home() {
       <h1 className="home__title">🧧 Lì Xì chúc Tết Bính Ngọ 2026</h1>
       <p className="home__subtitle">Chúc Mừng Năm Mới</p>
 
-      <div className="home__grid">
-        {familyMembers.map((member) => (
-          <Link
-            key={member.slug}
-            href={`/li-xi/${member.slug}`}
-            className="home__card"
-          >
-            <Image
-              src={member.photo}
-              alt={`Ảnh ${member.name}`}
-              width={64}
-              height={64}
-              className="home__card-avatar"
-            />
-            <span className="home__card-name">{member.name}</span>
-            <span className="home__card-relation">{member.relation}</span>
-          </Link>
-        ))}
-      </div>
+      <HomeCardGrid members={familyMembers} />
 
       <div className="home__footer">
         <p>
