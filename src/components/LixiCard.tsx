@@ -4,11 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
-import {
-  familyMembers,
-  type FamilyMember,
-  defaultGreeting,
-} from "@/src/constants/greetings";
+import { type FamilyMember } from "@/src/constants/greetings";
 
 // ─── Spring config for the swap animation ─────────────────────
 const SWAP_SPRING = {
@@ -37,12 +33,10 @@ function MoneyLayer() {
 // ─── Greeting Layer ───────────────────────────────────────────
 function GreetingLayer({
   data,
-  isDefault,
   onConfetti,
   confettiFired,
 }: {
-  data: FamilyMember | typeof defaultGreeting;
-  isDefault: boolean;
+  data: FamilyMember;
   onConfetti: () => void;
   confettiFired: boolean;
 }) {
@@ -53,7 +47,7 @@ function GreetingLayer({
     return () => clearTimeout(t);
   }, []);
 
-  const paragraphs = data.message.split("\n").filter((l) => l.trim());
+  const paragraphs = data.message.split("\n").filter((l: string) => l.trim());
 
   return (
     <div className={`card ${showContent ? "card--visible" : ""}`}>
@@ -113,47 +107,19 @@ function GreetingLayer({
         disabled={confettiFired}
       >
         <span className="card__btn-icon">🧧</span>
-        <span>{confettiFired ? "Lộc Xuân đã đến!" : "Nhận Lộc Xuân"}</span>
+        <span>
+          {confettiFired ? "Lộc Xuân đã đến!" : "Nhận Lộc Xuân từ Bin"}
+        </span>
       </button>
 
       {/* Bottom ornament */}
       <div className="card__bottom-ornament">✦ Bính Ngọ 2026 ✦</div>
-
-      {/* Nav to other family members */}
-      {!isDefault && (
-        <div className="card__family-nav">
-          <p className="card__family-nav-label">Gửi lì xì cho:</p>
-          <div className="card__family-links">
-            {familyMembers
-              .filter(
-                (m) =>
-                  !("slug" in data) || m.slug !== (data as FamilyMember).slug,
-              )
-              .map((m) => (
-                <a
-                  key={m.slug}
-                  href={`/li-xi/${m.slug}`}
-                  className="card__family-link"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {m.name}
-                </a>
-              ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
 
 // ─── Main LixiCard: 2-Layer Stack with Swap ───────────────────
-export default function LixiCard({
-  data,
-  isDefault,
-}: {
-  data: FamilyMember | typeof defaultGreeting;
-  isDefault: boolean;
-}) {
+export default function LixiCard({ data }: { data: FamilyMember }) {
   const [showingMoney, setShowingMoney] = useState(false);
   const [confettiFired, setConfettiFired] = useState(false);
   const swapLock = useRef(false);
@@ -211,23 +177,25 @@ export default function LixiCard({
     });
   }, [confettiFired]);
 
-  const handleSwap = useCallback(() => {
-    if (swapLock.current) return;
+  const handleBack = useCallback(() => {
+    if (!showingMoney || swapLock.current) return;
     swapLock.current = true;
-    setShowingMoney((prev) => !prev);
+    setShowingMoney(false);
     setTimeout(() => {
       swapLock.current = false;
     }, 800);
-  }, []);
+  }, [showingMoney]);
 
   return (
     <div
       className="layer-stack"
-      onClick={handleSwap}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => e.key === "Enter" && handleSwap()}
-      aria-label={showingMoney ? "Xem lại thiệp chúc" : "Xem lì xì 500.000đ"}
+      onClick={showingMoney ? handleBack : undefined}
+      role={showingMoney ? "button" : undefined}
+      tabIndex={showingMoney ? 0 : undefined}
+      onKeyDown={
+        showingMoney ? (e) => e.key === "Enter" && handleBack() : undefined
+      }
+      aria-label={showingMoney ? "Chạm để xem lại thiệp" : undefined}
     >
       {/* ── Back layer (peeking out) ── */}
       <motion.div
@@ -262,22 +230,23 @@ export default function LixiCard({
       >
         <GreetingLayer
           data={data}
-          isDefault={isDefault}
           onConfetti={fireConfetti}
           confettiFired={confettiFired}
         />
       </motion.div>
 
-      {/* Swap hint */}
-      <motion.div
-        className="swap-hint"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.6 }}
-      >
-        <span className="swap-hint__icon">⇅</span>
-        {showingMoney ? "Chạm để xem thiệp" : "Chạm để xem lì xì"}
-      </motion.div>
+      {/* Swap hint — only when money is showing */}
+      {showingMoney && (
+        <motion.div
+          className="swap-hint"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+        >
+          <span className="swap-hint__icon">⇅</span>
+          Chạm để xem lại thiệp
+        </motion.div>
+      )}
     </div>
   );
 }

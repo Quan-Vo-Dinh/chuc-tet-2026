@@ -28,7 +28,7 @@ export default function Home() {
       <div className="cloud-pattern cloud-pattern--1" aria-hidden="true" />
       <div className="cloud-pattern cloud-pattern--2" aria-hidden="true" />
 
-      <h1 className="home__title">🧧 Lì Xì Bính Ngọ 2026</h1>
+      <h1 className="home__title">🧧 Lì Xì chúc Tết Bính Ngọ 2026</h1>
       <p className="home__subtitle">Chúc Mừng Năm Mới</p>
 
       <div className="home__grid">
@@ -51,7 +51,18 @@ export default function Home() {
         ))}
       </div>
 
-      <p className="home__footer">Thương chúc, Minh Quân (Bin)</p>
+      <div className="home__footer">
+        <p>
+          Made by <span className="home__footer-name">Quân</span> đẹp trai vô
+          địch thanh lịch khắp vũ trụ
+        </p>
+        <Image
+          src="/images/quan-dep-trai.png"
+          alt="Quân đẹp trai"
+          width={120}
+          height={120}
+        />
+      </div>
     </div>
   );
 }

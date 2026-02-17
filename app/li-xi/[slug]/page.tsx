@@ -34,7 +34,11 @@ export default async function LiXiSlugPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const member = familyMembers.find((m) => m.slug === slug) || null;
+  const member = familyMembers.find((m) => m.slug === slug);
 
-  return <LiXiPage member={member} isDefault={!member} />;
+  if (!member) {
+    return <div>Không tìm thấy</div>;
+  }
+
+  return <LiXiPage member={member} />;
 }

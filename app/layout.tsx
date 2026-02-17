@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   description:
     "Thiệp lì xì Tết Bính Ngọ 2026 từ Minh Quân (Bin) gửi tặng gia đình thân yêu. Mã đáo thành công!",
   openGraph: {
-    title: "🧧 Lì Xì Bính Ngọ 2026",
+    title: "🧧 Lì Xì chúc Tết Bính Ngọ 2026",
     description: "Thiệp chúc Tết từ Minh Quân (Bin) gửi gia đình",
     type: "website",
   },

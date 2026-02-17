@@ -1,14 +1,10 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { Fireworks } from "@fireworks-js/react";
 import type { FireworksHandlers } from "@fireworks-js/react";
-import {
-  familyMembers,
-  defaultGreeting,
-  type FamilyMember,
-} from "@/src/constants/greetings";
+import { type FamilyMember } from "@/src/constants/greetings";
 import LixiCard from "@/src/components/LixiCard";
 
 // ─── Pre-generated blossom styles (pure, no Math.random in render) ─
@@ -265,15 +261,9 @@ function LiXiEnvelope({
 }
 
 // ─── Main Page Component ──────────────────────────────────────
-export default function LiXiPage({
-  member,
-  isDefault,
-}: {
-  member: FamilyMember | null;
-  isDefault: boolean;
-}) {
+export default function LiXiPage({ member }: { member: FamilyMember }) {
   const [envelopeOpened, setEnvelopeOpened] = useState(false);
-  const data = member || defaultGreeting;
+  const data = member;
 
   return (
     <div className="lixi-page">
@@ -290,7 +280,7 @@ export default function LiXiPage({
           onOpen={() => setEnvelopeOpened(true)}
         />
       ) : (
-        <LixiCard data={data} isDefault={isDefault} />
+        <LixiCard data={data} />
       )}
     </div>
   );
