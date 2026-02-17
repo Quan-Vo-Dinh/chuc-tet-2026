@@ -132,7 +132,7 @@ function GreetingLayer({
                 </AlertDialog.Cancel>
                 <AlertDialog.Action asChild>
                   <a
-                    href="https://lixi.momo.vn/lixi/dZ5WLnOAOvA24AO"
+                    href="https://lixi.momo.vn/lixi/Vv4N8n17qBoWXRy"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="momo-modal__btn momo-modal__btn--confirm"
