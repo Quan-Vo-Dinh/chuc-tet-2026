@@ -904,6 +904,82 @@ body {
   color: var(--cream);
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  animation: card-wobble 3s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.home__card::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 60%
+  );
+  animation: card-shine 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Stagger animations for each card */
+.home__card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.home__card:nth-child(2)::after {
+  animation-delay: 0.4s;
+}
+.home__card:nth-child(3) {
+  animation-delay: 0.8s;
+}
+.home__card:nth-child(3)::after {
+  animation-delay: 0.8s;
+}
+.home__card:nth-child(4) {
+  animation-delay: 1.2s;
+}
+.home__card:nth-child(4)::after {
+  animation-delay: 1.2s;
+}
+.home__card:nth-child(5) {
+  animation-delay: 1.6s;
+}
+.home__card:nth-child(5)::after {
+  animation-delay: 1.6s;
+}
+.home__card:nth-child(6) {
+  animation-delay: 2s;
+}
+.home__card:nth-child(6)::after {
+  animation-delay: 2s;
+}
+
+@keyframes card-wobble {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1.5deg);
+  }
+  75% {
+    transform: rotate(-1.5deg);
+  }
+}
+
+@keyframes card-shine {
+  0% {
+    left: -60%;
+  }
+  100% {
+    left: 120%;
+  }
 }
 
 .home__card:hover {
